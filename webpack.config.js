@@ -30,6 +30,11 @@ module.exports = {
 				test: /\.css$/,
 				exclude: /nodule_modules/,
 				loader: 'style-loader!css-loader'
+			},
+			{
+				test: /\.scss$/,
+				exclude: /nodule_modules/,
+				loader: 'style-loader!css-loader!sass-loader'
 			}
 		]		
 	},
