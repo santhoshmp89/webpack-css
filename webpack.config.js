@@ -1,11 +1,12 @@
 var path = require('path');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
 	context: path.resolve('js'),
 	entry: ["./app.js"],
 	output: {
-		path: path.resolve('build/js'),
-		publicPath: '/public/assets/js',
+		path: path.resolve('build/'),
+		publicPath: '/public/assets/',
 		filename: 'bundle.js'
 	},
 
@@ -29,15 +30,25 @@ module.exports = {
 			{
 				test: /\.css$/,
 				exclude: /nodule_modules/,
-				loader: 'style-loader!css-loader'
+				use: ExtractTextPlugin.extract({
+			          fallback: 'style-loader',
+			          use: 'css-loader'
+			        })
 			},
 			{
 				test: /\.scss$/,
 				exclude: /nodule_modules/,
-				loader: 'style-loader!css-loader!sass-loader'
+				use: ExtractTextPlugin.extract({
+			          fallback: 'style-loader',
+			          use: ['css-loader', 'sass-loader']
+			        })
 			}
 		]		
 	},
+
+	plugins: [
+		new ExtractTextPlugin('style.css')
+	],
 
 	resolve: {
 		extensions: ['.js', '.es6']
